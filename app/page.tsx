@@ -40,6 +40,7 @@ export default function Home() {
       </section>
       <section className="collection" id="colecao">
         <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>04 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
+        <div className="collection-catalog-line"><span>Catálogo / 01—04</span><span>Joias selecionadas • Maison Zibra</span></div>
         <div className="product-grid">
           {products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
         </div>
