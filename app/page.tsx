@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main>
       <header className="nav-shell">
-        <a className="wordmark" href="#inicio" aria-label="Zibra — início">ZIBRA</a>
+        <a className="wordmark" href="#inicio" aria-label="Zibra — início"><img src="/zibra-wordmark-white.png" alt="ZIBRA" /></a>
         <nav aria-label="Navegação principal">
           <a href="#colecao">Coleção</a><a href="#essencia">Nossa essência</a><a href="#experiencia">Experiência</a>
         </nav>
@@ -24,6 +24,7 @@ export default function Home() {
         <div className="hero-visual"><img src="/zibra-brincos-studio-v2.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
       <section className="manifesto" id="essencia">
+        <img className="manifesto-sigil" src="/zibra-monogram-black.png" alt="" aria-hidden="true" />
         <p className="section-kicker">PRATA • DELICADEZA • SIGNIFICADO</p>
         <blockquote>“Joias não são apenas acessórios.<br />São a forma mais bonita de contar quem somos.”</blockquote>
         <div className="manifesto-grid"><p className="manifesto-index">Z / 01</p><p>Na Zibra, acreditamos no poder dos detalhes. Cada peça nasce para acompanhar histórias, celebrar momentos e revelar aquilo que já existe de mais bonito em você.</p><p>Nossa curadoria une elegância contemporânea e símbolos atemporais — joias para presentear, guardar e viver todos os dias.</p></div>
@@ -39,8 +40,8 @@ export default function Home() {
         <div className="experience-copy"><p className="section-kicker">A EXPERIÊNCIA ZIBRA</p><h2>O presente começa<br /><em>antes de abrir.</em></h2><p>Cada joia é preparada com cuidado e entregue em uma embalagem elegante, pronta para tornar o momento inesquecível — seja para alguém especial ou para você.</p><ul><li><span>01</span> Embalagem exclusiva</li><li><span>02</span> Apresentação impecável</li><li><span>03</span> Cuidado em cada detalhe</li></ul></div>
       </section>
       <section className="promise"><div><span>✦</span><p><strong>Curadoria especial</strong>Peças escolhidas para emocionar</p></div><div><span>◇</span><p><strong>Atendimento próximo</strong>Ajuda para encontrar a joia certa</p></div><div><span>∞</span><p><strong>Feita para durar</strong>Beleza que atravessa momentos</p></div></section>
-      <section className="contact" id="contato"><div className="contact-monogram">ZB</div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p><a className="button button-dark" href="#colecao">Explorar peças <span>↑</span></a></section>
-      <footer><a className="wordmark" href="#inicio">ZIBRA</a><p>Joias que guardam significado.</p><p>© 2026 Zibra</p></footer>
+      <section className="contact" id="contato"><div className="contact-monogram" aria-hidden="true"><img src="/zibra-monogram-white.png" alt="" /></div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p><a className="button button-dark" href="#colecao">Explorar peças <span>↑</span></a></section>
+      <footer><a className="wordmark" href="#inicio" aria-label="Voltar ao início"><img src="/zibra-wordmark-white.png" alt="ZIBRA" /></a><p>Joias que guardam significado.</p><p>© 2026 Zibra</p></footer>
     </main>
   );
 }

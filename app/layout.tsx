@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://zibra-joias.o-gabriel-di-2032.chatgpt.site'),
   title: 'ZIBRA — Joias que guardam significado',
   description: 'Joias delicadas, acabamento impecável e uma experiência pensada para encantar.',
+  icons: {
+    icon: '/zibra-favicon.png',
+    apple: '/zibra-favicon.png',
+  },
   openGraph: {
     title: 'ZIBRA — Joias que guardam significado',
     description: 'Joias delicadas, acabamento impecável e uma experiência pensada para encantar.',
