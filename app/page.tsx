@@ -1,5 +1,5 @@
 const products = [
-  { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v2.png', note: 'Delicadeza que ilumina' },
+  { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v3.png', note: 'Delicadeza que ilumina' },
   { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar-studio-v2.png', note: 'Um símbolo para levar consigo' },
 ];
 
@@ -21,7 +21,7 @@ export default function Home() {
           <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span>↗</span></a><a className="text-link" href="#essencia">Descubra a Zibra <span>↓</span></a></div>
           <div className="hero-note"><span>✦</span><p><strong>Feito para encantar</strong><br />Da joia à embalagem, cada detalhe importa.</p></div>
         </div>
-        <div className="hero-visual"><img src="/zibra-brincos-studio-v2.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
+        <div className="hero-visual"><img src="/zibra-brincos-studio-v3.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra com identidade oficial" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
       <section className="manifesto" id="essencia">
         <img className="manifesto-sigil" src="/zibra-monogram-black.png" alt="" aria-hidden="true" />
