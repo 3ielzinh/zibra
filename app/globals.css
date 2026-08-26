@@ -20,11 +20,11 @@ body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}::sele
 @media(max-width:800px){.hero-edition{top:104px;left:24px;right:24px}.hero-edition span:last-child{display:none}.brand-marquee{height:48px}.brand-marquee>div{gap:28px}.collection-intro{margin-top:30px}.collection-intro>span{margin-bottom:12px}.product-card:hover{transform:none}.editorial-pause{padding:105px 22px 115px}.editorial-pause>img{width:75vw}.editorial-pause h2{font-size:48px}.nav-shell{background:rgba(9,9,9,.88)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
-/* Faixa contínua: dois grupos idênticos evitam qualquer intervalo vazio. */
+/* Cada cópia ocupa no mínimo uma tela inteira para o loop nunca revelar vazios. */
 .brand-marquee>.marquee-track{display:flex;align-items:center;gap:0;width:max-content;animation:marquee-loop 24s linear infinite;will-change:transform}
-.marquee-group{display:flex;align-items:center;gap:42px;flex-shrink:0;padding-right:42px;white-space:nowrap}
+.marquee-group{display:flex;align-items:center;justify-content:space-around;gap:42px;flex-shrink:0;width:max-content;min-width:100vw;padding:0 21px;box-sizing:border-box;white-space:nowrap}
 @keyframes marquee-loop{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(max-width:800px){.brand-marquee>.marquee-track{gap:0}.marquee-group{gap:28px;padding-right:28px}}
+@media(max-width:800px){.brand-marquee>.marquee-track{gap:0}.marquee-group{gap:28px;padding:0 14px}}
 @media(prefers-reduced-motion:reduce){.brand-marquee>.marquee-track{animation-play-state:paused}}
 
 /* Ritmo editorial da coleção ampliada. */
