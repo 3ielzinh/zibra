@@ -1,6 +1,8 @@
 const products = [
   { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v3.png', note: 'Delicadeza que ilumina' },
   { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar-studio-v2.png', note: 'Um símbolo para levar consigo' },
+  { name: 'Corrente Grumet', type: 'Corrente', image: '/zibra-corrente-grumet-studio.png', note: 'Presença em cada elo' },
+  { name: 'Corrente Trama', type: 'Corrente', image: '/zibra-corrente-trama-studio.png', note: 'Textura que captura a luz' },
 ];
 
 export default function Home() {
@@ -37,7 +39,7 @@ export default function Home() {
         <div className="manifesto-grid"><p className="manifesto-index">Z / 01</p><p>Na Zibra, acreditamos no poder dos detalhes. Cada peça nasce para acompanhar histórias, celebrar momentos e revelar aquilo que já existe de mais bonito em você.</p><p>Nossa curadoria une elegância contemporânea e símbolos atemporais — joias para presentear, guardar e viver todos os dias.</p></div>
       </section>
       <section className="collection" id="colecao">
-        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>02 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
+        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>04 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
         <div className="product-grid">
           {products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
         </div>

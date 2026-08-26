@@ -26,3 +26,7 @@ body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}::sele
 @keyframes marquee-loop{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:800px){.brand-marquee>.marquee-track{gap:0}.marquee-group{gap:28px;padding-right:28px}}
 @media(prefers-reduced-motion:reduce){.brand-marquee>.marquee-track{animation-play-state:paused}}
+
+/* Ritmo editorial da coleção ampliada. */
+.product-card:nth-child(4){margin-top:115px}.product-card:nth-child(4) .product-image{height:600px}
+@media(max-width:800px){.product-card:nth-child(4){margin-top:35px}.product-card:nth-child(4) .product-image{height:590px}}
