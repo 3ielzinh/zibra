@@ -45,3 +45,9 @@ body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}::sele
 .collection .product-card:hover{transform:translateY(-4px)}
 @media(max-width:1100px){.collection .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px}.collection .product-meta h3{font-size:23px}}
 @media(max-width:650px){.collection{padding:72px 14px 82px}.collection .section-heading{margin-bottom:32px}.collection .section-heading h2{font-size:44px}.collection .collection-intro{margin-top:22px;max-width:280px}.collection-catalog-line{margin-bottom:12px;font-size:6px;letter-spacing:.14em}.collection-catalog-line span:last-child{display:none}.collection .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 10px}.collection .product-meta{padding:13px 0 16px;gap:6px}.collection .product-meta h3{font-size:17px}.collection .product-meta small{display:none}.collection .product-meta>a{width:32px;height:32px;flex-basis:32px;font-size:13px}.collection .product-stamp{left:9px;bottom:9px;font-size:5px}.collection .product-card:hover{transform:none}}
+
+/* Hero mais compacto: impacto editorial sem dominar toda a página. */
+.hero{min-height:0;height:clamp(610px,76vh,700px)}
+.hero-copy{padding:118px 6vw 40px}.hero-copy h1{font-size:clamp(56px,6vw,90px)}.hero-lead{margin:24px 0;line-height:1.65}.hero-note{margin-top:auto}
+.hero-edition{top:104px;left:6vw;right:6vw}.hero-visual{min-height:0;height:100%}.image-tag{right:30px;bottom:30px}
+@media(max-width:800px){.hero{height:auto}.hero-copy{min-height:550px;padding:112px 24px 36px}.hero-copy h1{font-size:clamp(54px,18vw,74px)}.hero-lead{margin:22px 0}.hero-note{margin-top:38px}.hero-edition{top:94px}.hero-visual{height:440px;min-height:0}.image-tag{right:22px;bottom:22px}}
