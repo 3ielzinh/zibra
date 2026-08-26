@@ -22,7 +22,7 @@ export default function Home() {
           <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span>↗</span></a><a className="text-link" href="#essencia">Descubra a Zibra <span>↓</span></a></div>
           <div className="hero-note"><span>✦</span><p><strong>Feito para encantar</strong><br />Da joia à embalagem, cada detalhe importa.</p></div>
         </div>
-        <div className="hero-visual"><img src="/zibra-brincos-studio-v3.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra com identidade oficial" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
+        <div className="hero-visual"><img src="/zibra-brincos-studio-v3.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra com identidade oficial" /><div className="image-tag"><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
       <div className="brand-marquee" aria-label="Valores da marca">
         <div className="marquee-track">
@@ -39,7 +39,7 @@ export default function Home() {
       <section className="collection" id="colecao">
         <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>02 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
         <div className="product-grid">
-          {products.map((product, index) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>0{index + 1}</span><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
+          {products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
         </div>
       </section>
       <section className="editorial-pause" aria-label="Essência Zibra">
