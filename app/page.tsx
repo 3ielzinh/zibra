@@ -15,6 +15,7 @@ export default function Home() {
       </header>
       <section className="hero" id="inicio">
         <div className="hero-copy">
+          <div className="hero-edition"><span>Maison Zibra</span><span>Brasil / 2026</span></div>
           <p className="eyebrow">Joias que guardam significado</p>
           <h1>O brilho de ser <em>única.</em></h1>
           <p className="hero-lead">Peças delicadas, acabamento impecável e uma experiência pensada para transformar cada escolha em memória.</p>
@@ -23,6 +24,9 @@ export default function Home() {
         </div>
         <div className="hero-visual"><img src="/zibra-brincos-studio-v3.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra com identidade oficial" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
+      <div className="brand-marquee" aria-label="Valores da marca">
+        <div><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span><i>✦</i><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span></div>
+      </div>
       <section className="manifesto" id="essencia">
         <img className="manifesto-sigil" src="/zibra-monogram-black.png" alt="" aria-hidden="true" />
         <p className="section-kicker">PRATA • DELICADEZA • SIGNIFICADO</p>
@@ -30,10 +34,16 @@ export default function Home() {
         <div className="manifesto-grid"><p className="manifesto-index">Z / 01</p><p>Na Zibra, acreditamos no poder dos detalhes. Cada peça nasce para acompanhar histórias, celebrar momentos e revelar aquilo que já existe de mais bonito em você.</p><p>Nossa curadoria une elegância contemporânea e símbolos atemporais — joias para presentear, guardar e viver todos os dias.</p></div>
       </section>
       <section className="collection" id="colecao">
-        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div>
+        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>02 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
         <div className="product-grid">
-          {products.map((product, index) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>0{index + 1}</span></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
+          {products.map((product, index) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>0{index + 1}</span><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
         </div>
+      </section>
+      <section className="editorial-pause" aria-label="Essência Zibra">
+        <img src="/zibra-monogram-white.png" alt="" aria-hidden="true" />
+        <p className="section-kicker">UMA ESCOLHA ÍNTIMA</p>
+        <h2>Para lembrar. Para celebrar.<br /><em>Para ser sua.</em></h2>
+        <span>O extraordinário mora nos detalhes.</span>
       </section>
       <section className="experience" id="experiencia">
         <div className="experience-image"><img src="/zibra-embalagem-studio-v2.png" alt="Sacola e caixas premium da Zibra em composição de estúdio" /></div>
