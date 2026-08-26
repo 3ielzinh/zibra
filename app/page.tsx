@@ -1,6 +1,6 @@
 const products = [
-  { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos.jpeg', note: 'Delicadeza que ilumina' },
-  { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar.jpeg', note: 'Um símbolo para levar consigo' },
+  { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v2.png', note: 'Delicadeza que ilumina' },
+  { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar-studio-v2.png', note: 'Um símbolo para levar consigo' },
 ];
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
           <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span>↗</span></a><a className="text-link" href="#essencia">Descubra a Zibra <span>↓</span></a></div>
           <div className="hero-note"><span>✦</span><p><strong>Feito para encantar</strong><br />Da joia à embalagem, cada detalhe importa.</p></div>
         </div>
-        <div className="hero-visual"><img src="/zibra-brincos.jpeg" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
+        <div className="hero-visual"><img src="/zibra-brincos-studio-v2.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
       <section className="manifesto" id="essencia">
         <p className="section-kicker">PRATA • DELICADEZA • SIGNIFICADO</p>
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </section>
       <section className="experience" id="experiencia">
-        <div className="experience-image"><img src="/zibra-embalagem.jpeg" alt="Sacola, caixas e papel de seda da Zibra" /></div>
+        <div className="experience-image"><img src="/zibra-embalagem-studio-v2.png" alt="Sacola e caixas premium da Zibra em composição de estúdio" /></div>
         <div className="experience-copy"><p className="section-kicker">A EXPERIÊNCIA ZIBRA</p><h2>O presente começa<br /><em>antes de abrir.</em></h2><p>Cada joia é preparada com cuidado e entregue em uma embalagem elegante, pronta para tornar o momento inesquecível — seja para alguém especial ou para você.</p><ul><li><span>01</span> Embalagem exclusiva</li><li><span>02</span> Apresentação impecável</li><li><span>03</span> Cuidado em cada detalhe</li></ul></div>
       </section>
       <section className="promise"><div><span>✦</span><p><strong>Curadoria especial</strong>Peças escolhidas para emocionar</p></div><div><span>◇</span><p><strong>Atendimento próximo</strong>Ajuda para encontrar a joia certa</p></div><div><span>∞</span><p><strong>Feita para durar</strong>Beleza que atravessa momentos</p></div></section>
