@@ -25,7 +25,10 @@ export default function Home() {
         <div className="hero-visual"><img src="/zibra-brincos-studio-v3.png" alt="Brincos em formato de gota com pedras rosadas, apresentados em caixa Zibra com identidade oficial" /><div className="image-tag"><span>01</span><p>Elegância<br />em cada detalhe</p></div></div>
       </section>
       <div className="brand-marquee" aria-label="Valores da marca">
-        <div><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span><i>✦</i><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span></div>
+        <div className="marquee-track">
+          <div className="marquee-group"><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span><i>✦</i></div>
+          <div className="marquee-group" aria-hidden="true"><span>Curadoria especial</span><i>✦</i><span>Joias com significado</span><i>✦</i><span>Elegância em cada detalhe</span><i>✦</i></div>
+        </div>
       </div>
       <section className="manifesto" id="essencia">
         <img className="manifesto-sigil" src="/zibra-monogram-black.png" alt="" aria-hidden="true" />
