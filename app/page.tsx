@@ -1,55 +1,46 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-
-type Product = { id?: number; name: string; type: string; image: string; note: string; featured?: boolean };
-
-const fallbackProducts: Product[] = [
-  { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v3.png', note: 'Delicadeza que ilumina' },
-  { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar-studio-v2.png', note: 'Um símbolo para levar consigo' },
-  { name: 'Corrente Grumet', type: 'Corrente', image: '/zibra-corrente-grumet-studio.png', note: 'Presença em cada elo' },
-  { name: 'Corrente Trama', type: 'Corrente', image: '/zibra-corrente-trama-studio.png', note: 'Textura que captura a luz' },
-];
+import { useDeferredValue, useEffect, useMemo, useState } from 'react';
+import { fallbackProducts, normalizeWordPressProduct, Product, whatsappUrl } from '../lib/catalog';
 
 const wpApiUrl = process.env.NEXT_PUBLIC_WP_API_URL?.replace(/\/$/, '');
-
-function normalizeWordPressProduct(item: any): Product {
-  const meta = item?.catalogo || item?.acf || item?.meta || {};
-  const image = meta.imagem_principal || item?._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/zibra-brincos-studio-v3.png';
-  return {
-    id: item.id,
-    name: item.title?.rendered || meta.nome || 'Joia Zibra',
-    type: meta.categoria || item?._embedded?.['wp:term']?.[0]?.[0]?.name || 'Joias',
-    image: typeof image === 'object' ? image.url : image,
-    note: meta.descricao_curta || item.excerpt?.rendered?.replace(/<[^>]+>/g, '') || 'Elegância em cada detalhe',
-    featured: Boolean(meta.destaque || item.sticky),
-  };
-}
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>(fallbackProducts);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [isRemote, setIsRemote] = useState(false);
+  const [isLoading, setIsLoading] = useState(Boolean(wpApiUrl));
+  const [hasRemoteError, setHasRemoteError] = useState(false);
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('curadoria');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const deferredQuery = useDeferredValue(query);
 
   useEffect(() => {
     if (!wpApiUrl) return;
     fetch(`${wpApiUrl}/wp/v2/produtos?per_page=100&_embed=1&orderby=menu_order&order=asc`, { headers: { Accept: 'application/json' } })
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('WordPress indisponível')))
-      .then((items) => { setProducts(items.map(normalizeWordPressProduct)); setIsRemote(true); })
-      .catch(() => setIsRemote(false));
+      .then((items) => { setProducts(items.map(normalizeWordPressProduct)); setIsRemote(true); setHasRemoteError(false); })
+      .catch(() => { setIsRemote(false); setHasRemoteError(true); })
+      .finally(() => setIsLoading(false));
   }, []);
 
   const categories = useMemo(() => ['Todos', ...Array.from(new Set(products.map((product) => product.type)))], [products]);
-  const visibleProducts = useMemo(() => activeCategory === 'Todos' ? products : products.filter((product) => product.type === activeCategory), [activeCategory, products]);
+  const visibleProducts = useMemo(() => {
+    const filtered = products.filter((product) => (activeCategory === 'Todos' || product.type === activeCategory) && product.name.toLowerCase().includes(deferredQuery.toLowerCase()));
+    if (sort === 'nome') return [...filtered].sort((a,b)=>a.name.localeCompare(b.name));
+    if (sort === 'destaques') return [...filtered].sort((a,b)=>Number(Boolean(b.featured))-Number(Boolean(a.featured)));
+    return filtered;
+  }, [activeCategory, deferredQuery, products, sort]);
 
   return (
     <main>
       <header className="nav-shell">
         <a className="wordmark" href="#inicio" aria-label="Zibra — início"><img src="/zibra-wordmark-white.png" alt="ZIBRA" /></a>
-        <nav aria-label="Navegação principal">
+        <nav className={menuOpen ? 'is-open' : ''} aria-label="Navegação principal">
           <a href="#colecao">Coleção</a><a href="#essencia">Nossa essência</a><a href="#experiencia">Experiência</a>
         </nav>
-        <div className="nav-actions"><a className="nav-login" href="/acesso">Área do cliente</a><a className="nav-cta" href="#contato">Atendimento</a></div>
+        <div className="nav-actions"><a className="nav-login" href="/acesso">Área do cliente</a><a className="nav-cta" href="#contato">Atendimento</a><button className="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded={menuOpen} onClick={()=>setMenuOpen(value=>!value)}>{menuOpen ? '×' : '☰'}</button></div>
       </header>
       <section className="hero" id="inicio">
         <div className="hero-copy">
@@ -80,9 +71,13 @@ export default function Home() {
         <div className="catalog-filters" aria-label="Filtrar catálogo">
           {categories.map((category) => <button type="button" className={activeCategory === category ? 'is-active' : ''} onClick={() => setActiveCategory(category)} key={category}>{category}</button>)}
         </div>
+        <div className="catalog-tools"><label><span>Buscar</span><input value={query} onChange={(event)=>setQuery(event.target.value)} placeholder="Nome da joia" /></label><label><span>Ordenar</span><select value={sort} onChange={(event)=>setSort(event.target.value)}><option value="curadoria">Curadoria Zibra</option><option value="destaques">Destaques</option><option value="nome">Nome A—Z</option></select></label></div>
+        {isLoading ? <div className="catalog-status">Atualizando a curadoria…</div> : null}
+        {hasRemoteError ? <div className="catalog-status">Exibindo a seleção Zibra disponível enquanto o catálogo é atualizado.</div> : null}
         <div className="product-grid">
-          {visibleProducts.map((product) => <article className="product-card" key={product.id || product.name}><div className="product-image"><img src={product.image} alt={product.name} loading="lazy" /><p className="product-stamp">{product.featured ? 'Destaque Zibra' : 'Seleção Zibra'}</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
+          {visibleProducts.map((product) => <article className="product-card" key={product.id || product.name}><a href={`/joias/${product.slug}`}><div className="product-image"><img src={product.image} alt={product.name} loading="lazy" /><p className="product-stamp">{product.featured ? 'Destaque Zibra' : 'Seleção Zibra'}</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><span aria-hidden="true">↗</span></div></a></article>)}
         </div>
+        {!visibleProducts.length ? <div className="catalog-empty"><p>Nenhuma joia encontrada.</p><button type="button" onClick={()=>{setQuery('');setActiveCategory('Todos')}}>Ver toda a coleção</button></div> : null}
       </section>
       <section className="editorial-pause" aria-label="Essência Zibra">
         <img src="/zibra-monogram-white.png" alt="" aria-hidden="true" />
@@ -95,7 +90,8 @@ export default function Home() {
         <div className="experience-copy"><p className="section-kicker">A EXPERIÊNCIA ZIBRA</p><h2>O presente começa<br /><em>antes de abrir.</em></h2><p>Cada joia é preparada com cuidado e entregue em uma embalagem elegante, pronta para tornar o momento inesquecível — seja para alguém especial ou para você.</p><ul><li><span>01</span> Embalagem exclusiva</li><li><span>02</span> Apresentação impecável</li><li><span>03</span> Cuidado em cada detalhe</li></ul></div>
       </section>
       <section className="promise"><div><span>✦</span><p><strong>Curadoria especial</strong>Peças escolhidas para emocionar</p></div><div><span>◇</span><p><strong>Atendimento próximo</strong>Ajuda para encontrar a joia certa</p></div><div><span>∞</span><p><strong>Feita para durar</strong>Beleza que atravessa momentos</p></div></section>
-      <section className="contact" id="contato"><div className="contact-monogram" aria-hidden="true"><img src="/zibra-monogram-white.png" alt="" /></div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p><a className="button button-dark" href="#colecao">Explorar peças <span>↑</span></a></section>
+      <section className="trust"><p>Garantia e cuidado</p><p>Embalagem pronta para presentear</p><p>Atendimento humano e próximo</p><p>Trocas com orientação</p></section>
+      <section className="contact" id="contato"><div className="contact-monogram" aria-hidden="true"><img src="/zibra-monogram-white.png" alt="" /></div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p><a className="button button-dark" href={whatsappUrl()} target="_blank" rel="noreferrer">Falar com a Zibra <span>↗</span></a></section>
       <footer><a className="wordmark" href="#inicio" aria-label="Voltar ao início"><img src="/zibra-wordmark-white.png" alt="ZIBRA" /></a><p>Joias que guardam significado.</p><p>© 2026 Zibra</p></footer>
     </main>
   );
