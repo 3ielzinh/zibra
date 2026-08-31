@@ -49,7 +49,7 @@ export default function Home() {
         <nav aria-label="Navegação principal">
           <a href="#colecao">Coleção</a><a href="#essencia">Nossa essência</a><a href="#experiencia">Experiência</a>
         </nav>
-        <a className="nav-cta" href="#contato">Atendimento</a>
+        <div className="nav-actions"><a className="nav-login" href="/acesso">Área do cliente</a><a className="nav-cta" href="#contato">Atendimento</a></div>
       </header>
       <section className="hero" id="inicio">
         <div className="hero-copy">
