@@ -1,11 +1,47 @@
-const products = [
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+
+type Product = { id?: number; name: string; type: string; image: string; note: string; featured?: boolean };
+
+const fallbackProducts: Product[] = [
   { name: 'Brincos Gota Rosa', type: 'Brincos', image: '/zibra-brincos-studio-v3.png', note: 'Delicadeza que ilumina' },
   { name: 'Colar Fé', type: 'Colar', image: '/zibra-colar-studio-v2.png', note: 'Um símbolo para levar consigo' },
   { name: 'Corrente Grumet', type: 'Corrente', image: '/zibra-corrente-grumet-studio.png', note: 'Presença em cada elo' },
   { name: 'Corrente Trama', type: 'Corrente', image: '/zibra-corrente-trama-studio.png', note: 'Textura que captura a luz' },
 ];
 
+const wpApiUrl = process.env.NEXT_PUBLIC_WP_API_URL?.replace(/\/$/, '');
+
+function normalizeWordPressProduct(item: any): Product {
+  const meta = item?.catalogo || item?.acf || item?.meta || {};
+  const image = meta.imagem_principal || item?._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/zibra-brincos-studio-v3.png';
+  return {
+    id: item.id,
+    name: item.title?.rendered || meta.nome || 'Joia Zibra',
+    type: meta.categoria || item?._embedded?.['wp:term']?.[0]?.[0]?.name || 'Joias',
+    image: typeof image === 'object' ? image.url : image,
+    note: meta.descricao_curta || item.excerpt?.rendered?.replace(/<[^>]+>/g, '') || 'Elegância em cada detalhe',
+    featured: Boolean(meta.destaque || item.sticky),
+  };
+}
+
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>(fallbackProducts);
+  const [activeCategory, setActiveCategory] = useState('Todos');
+  const [isRemote, setIsRemote] = useState(false);
+
+  useEffect(() => {
+    if (!wpApiUrl) return;
+    fetch(`${wpApiUrl}/wp/v2/produtos?per_page=100&_embed=1&orderby=menu_order&order=asc`, { headers: { Accept: 'application/json' } })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('WordPress indisponível')))
+      .then((items) => { setProducts(items.map(normalizeWordPressProduct)); setIsRemote(true); })
+      .catch(() => setIsRemote(false));
+  }, []);
+
+  const categories = useMemo(() => ['Todos', ...Array.from(new Set(products.map((product) => product.type)))], [products]);
+  const visibleProducts = useMemo(() => activeCategory === 'Todos' ? products : products.filter((product) => product.type === activeCategory), [activeCategory, products]);
+
   return (
     <main>
       <header className="nav-shell">
@@ -39,10 +75,13 @@ export default function Home() {
         <div className="manifesto-grid"><p className="manifesto-index">Z / 01</p><p>Na Zibra, acreditamos no poder dos detalhes. Cada peça nasce para acompanhar histórias, celebrar momentos e revelar aquilo que já existe de mais bonito em você.</p><p>Nossa curadoria une elegância contemporânea e símbolos atemporais — joias para presentear, guardar e viver todos os dias.</p></div>
       </section>
       <section className="collection" id="colecao">
-        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>04 / peças em destaque</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
-        <div className="collection-catalog-line"><span>Catálogo / 01—04</span><span>Joias selecionadas • Maison Zibra</span></div>
+        <div className="section-heading"><div><p className="section-kicker">CURADORIA ZIBRA</p><h2>Escolhas que<br /><em>falam por você.</em></h2></div><div className="collection-intro"><span>{String(visibleProducts.length).padStart(2, '0')} / peças disponíveis</span><p>Uma seleção delicada para marcar presença sem dizer uma palavra.</p></div></div>
+        <div className="collection-catalog-line"><span>Catálogo / {String(visibleProducts.length).padStart(2, '0')} peças</span><span>{isRemote ? 'Atualizado pela Zibra • WordPress' : 'Joias selecionadas • Maison Zibra'}</span></div>
+        <div className="catalog-filters" aria-label="Filtrar catálogo">
+          {categories.map((category) => <button type="button" className={activeCategory === category ? 'is-active' : ''} onClick={() => setActiveCategory(category)} key={category}>{category}</button>)}
+        </div>
         <div className="product-grid">
-          {products.map((product) => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><p className="product-stamp">Seleção Zibra</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
+          {visibleProducts.map((product) => <article className="product-card" key={product.id || product.name}><div className="product-image"><img src={product.image} alt={product.name} loading="lazy" /><p className="product-stamp">{product.featured ? 'Destaque Zibra' : 'Seleção Zibra'}</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.note}</small></div><a href="#contato" aria-label={`Consultar ${product.name}`}>↗</a></div></article>)}
         </div>
       </section>
       <section className="editorial-pause" aria-label="Essência Zibra">
