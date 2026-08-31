@@ -8,7 +8,7 @@ async function getProduct(slug:string) {
   const local = fallbackProducts.find(product=>product.slug===slug);
   const api = process.env.NEXT_PUBLIC_WP_API_URL?.replace(/\/$/,'');
   if (!api) return local;
-  try { const response = await fetch(`${api}/wp/v2/produtos?slug=${encodeURIComponent(slug)}&_embed=1`, { next:{ revalidate:300 } }); const items = response.ok ? await response.json() : []; return items[0] ? normalizeWordPressProduct(items[0]) : local; } catch { return local; }
+  try { const response = await fetch(`${api}/wp/v2/produtos?slug=${encodeURIComponent(slug)}&_embed=1`, { next:{ revalidate:300 } }); const items = response.ok ? await response.json() as unknown[] : []; return items[0] ? normalizeWordPressProduct(items[0]) : local; } catch { return local; }
 }
 
 export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata> {

@@ -20,7 +20,7 @@ export default function Home() {
     if (!wpApiUrl) return;
     fetch(`${wpApiUrl}/wp/v2/produtos?per_page=100&_embed=1&orderby=menu_order&order=asc`, { headers: { Accept: 'application/json' } })
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('WordPress indisponível')))
-      .then((items) => { setProducts(items.map(normalizeWordPressProduct)); setIsRemote(true); setHasRemoteError(false); })
+      .then((items) => { const data = items as unknown[]; setProducts(data.map(normalizeWordPressProduct)); setIsRemote(true); setHasRemoteError(false); })
       .catch(() => { setIsRemote(false); setHasRemoteError(true); })
       .finally(() => setIsLoading(false));
   }, []);

@@ -7,7 +7,8 @@ export const fallbackProducts: Product[] = [
   { slug:'corrente-trama', name:'Corrente Trama', type:'Corrente', image:'/zibra-corrente-trama-studio.png', gallery:['/zibra-corrente-trama-studio.png'], note:'Textura que captura a luz', description:'Uma trama refinada que acompanha o movimento e cria pontos sutis de luz sobre a pele.', material:'Prata com acabamento polido', measures:'Trama delicada · comprimento sob consulta', care:'Use flanela própria para prata e mantenha longe da umidade.', availability:'Disponível sob consulta' },
 ];
 
-export function normalizeWordPressProduct(item: any): Product {
+export function normalizeWordPressProduct(value: unknown): Product {
+  const item = value as Record<string, any>;
   const meta = item?.catalogo || item?.acf || item?.meta || {};
   const imageValue = meta.imagem_principal || item?._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/zibra-brincos-studio-v3.png';
   const gallery = Array.isArray(meta.galeria) ? meta.galeria.map((entry:any)=>typeof entry === 'object' ? entry.url : entry) : typeof meta.galeria === 'string' ? meta.galeria.split(',').filter(Boolean) : [];
