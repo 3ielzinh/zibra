@@ -1,5 +1,6 @@
 'use client';
 
+import ArrowIcon from './ArrowIcon';
 import Image from 'next/image';
 import { useDeferredValue, useMemo, useState } from 'react';
 import type { CatalogSource, Product } from '../lib/catalog';
@@ -52,7 +53,7 @@ export default function CatalogClient({ products, source, hasRemoteError, isStal
       {source !== 'unavailable' ? <div className="catalog-tools"><label><span>Buscar</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Nome da joia" /></label><label><span>Ordenar</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="curadoria">Curadoria Zibra</option><option value="destaques">Destaques</option><option value="nome">Nome de A a Z</option></select></label></div> : null}
       {hasRemoteError && statusMessage ? <div className="catalog-status" role="status">{statusMessage}</div> : null}
       <div className="product-grid">
-        {visibleProducts.map((product) => <article className="product-card" key={product.id || product.name}><a href={`/joias/${product.slug}`}><div className="product-image"><Image src={product.image} alt={product.name} fill sizes="(max-width: 820px) 50vw, (max-width: 1150px) 33vw, 25vw" quality={82} /><p className="product-stamp">{product.availabilityStatus === 'esgotado' ? 'Esgotado' : product.featured ? 'Destaque Zibra' : 'Seleção Zibra'}</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.availabilityStatus === 'esgotado' ? 'Peça indisponível' : product.price || product.note}</small></div><span aria-hidden="true">↗</span></div></a></article>)}
+        {visibleProducts.map((product) => <article className="product-card" key={product.id || product.name}><a href={`/joias/${product.slug}`}><div className="product-image"><Image src={product.image} alt={product.name} fill sizes="(max-width: 820px) 50vw, (max-width: 1150px) 33vw, 25vw" quality={82} /><p className="product-stamp">{product.availabilityStatus === 'esgotado' ? 'Esgotado' : product.featured ? 'Destaque Zibra' : 'Seleção Zibra'}</p></div><div className="product-meta"><div><p>{product.type}</p><h3>{product.name}</h3><small>{product.availabilityStatus === 'esgotado' ? 'Peça indisponível' : product.price || product.note}</small></div><span aria-hidden="true"><ArrowIcon /></span></div></a></article>)}
       </div>
       {!visibleProducts.length && source !== 'unavailable' ? <div className="catalog-empty"><p>{products.length ? 'Nenhuma joia encontrada.' : 'A nova curadoria será publicada em breve.'}</p>{products.length ? <button type="button" onClick={() => { setQuery(''); setActiveCategory('Todos'); }}>Ver toda a coleção</button> : null}</div> : null}
     </section>

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import CatalogClient from './CatalogClient';
 import HomeHeader from './HomeHeader';
+import HeroFilm from './HeroFilm';
+import ArrowIcon from './ArrowIcon';
 import { whatsappUrl } from '../lib/catalog';
 import { getCatalog } from '../lib/catalog-server';
 
@@ -17,13 +19,11 @@ export default async function Home() {
           <p className="eyebrow">Joias que guardam significado</p>
           <h1>O brilho de ser <em>única.</em></h1>
           <p className="hero-lead">Peças delicadas, acabamento impecável e uma experiência pensada para transformar cada escolha em memória.</p>
-          <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span>↗</span></a><a className="text-link" href="#essencia">Descubra a Zibra <span>↓</span></a></div>
+          <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span><ArrowIcon /></span></a><a className="text-link" href="#essencia">Descubra a Zibra <span><ArrowIcon direction="down" /></span></a></div>
           <div className="hero-note"><span>✦</span><p><strong>Feito para encantar</strong><br />Da joia à embalagem, cada detalhe importa.</p></div>
         </div>
         <div className="hero-visual">
-          <video className="hero-film" autoPlay muted loop playsInline preload="metadata" poster="/zibra-hero-poster.webp" aria-hidden="true">
-            <source src="/zibra-hero-film.mp4" type="video/mp4" />
-          </video>
+          <HeroFilm />
           <div className="image-tag"><p>Filme de campanha<br />Maison Zibra</p></div>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default async function Home() {
       </section>
       <section className="promise"><div><span>✦</span><p><strong>Curadoria especial</strong>Peças escolhidas para emocionar</p></div><div><span>◇</span><p><strong>Atendimento próximo</strong>Ajuda para encontrar a joia certa</p></div><div><span>∞</span><p><strong>Feita para durar</strong>Beleza que atravessa momentos</p></div></section>
       <section className="trust"><p>Garantia e cuidado</p><p>Embalagem pronta para presentear</p><p>Atendimento humano e próximo</p><p>Trocas com orientação</p></section>
-      <section className="contact" id="contato"><div className="contact-monogram" aria-hidden="true"><Image src="/zibra-monogram-white.png" alt="" width={610} height={522} /></div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p>{contactUrl ? <a className="button button-dark" href={contactUrl} target="_blank" rel="noreferrer">Falar com a Zibra <span>↗</span></a> : <span className="button button-dark is-disabled" aria-disabled="true">WhatsApp em configuração</span>}</section>
+      <section className="contact" id="contato"><div className="contact-monogram" aria-hidden="true"><Image src="/zibra-monogram-white.png" alt="" width={610} height={522} /></div><p className="section-kicker">ENCONTRE SUA PRÓXIMA JOIA</p><h2>Qual história você<br />quer <em>guardar?</em></h2><p>Converse com a Zibra para conhecer detalhes, disponibilidade e escolher a peça que combina com o seu momento.</p>{contactUrl ? <a className="button button-dark" href={contactUrl} target="_blank" rel="noreferrer">Falar com a Zibra <span><ArrowIcon /></span></a> : <span className="button button-dark is-disabled" aria-disabled="true">WhatsApp em configuração</span>}</section>
       <footer><a className="wordmark" href="#inicio" aria-label="Voltar ao início"><Image src="/zibra-wordmark-white.png" alt="ZIBRA" width={96} height={22} /></a><p>Joias que guardam significado.</p><p>© 2026 Zibra</p></footer>
     </main>
   );

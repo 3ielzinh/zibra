@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './access.module.css';
+import ArrowIcon from '../ArrowIcon';
 
 const wpUrl = process.env.NEXT_PUBLIC_WP_URL?.replace(/\/$/, '') || '';
 
@@ -23,7 +24,7 @@ export default function AccessPage() {
     <main className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.wordmark} href="/"><Image src="/zibra-wordmark-black.png" alt="ZIBRA" width={118} height={27} priority /></Link>
-        <Link className={styles.back} href="/">Voltar ao site ↗</Link>
+        <Link className={styles.back} href="/">Voltar ao site <ArrowIcon className="arrow-icon-text" /></Link>
       </header>
       <section className={styles.card} aria-labelledby="access-title">
         <p className={styles.kicker}>ACESSO ADMINISTRATIVO</p>
@@ -31,8 +32,8 @@ export default function AccessPage() {
         <p className={styles.lead}>Área reservada à equipe Zibra para cadastrar joias, organizar categorias e atualizar as informações exibidas na loja.</p>
         {isConfigured ? (
           <div className={styles.actions}>
-            <a className={styles.primary} href={loginUrl} rel="noreferrer">Entrar com WordPress <span>↗</span></a>
-            <a className={styles.manage} href={productsUrl} rel="noreferrer">Já estou conectado · Abrir produtos <span>→</span></a>
+            <a className={styles.primary} href={loginUrl} rel="noreferrer">Entrar com WordPress <span><ArrowIcon /></span></a>
+            <a className={styles.manage} href={productsUrl} rel="noreferrer">Já estou conectado · Abrir produtos <span><ArrowIcon direction="right" /></span></a>
           </div>
         ) : (
           <div className={styles.pending} role="status">
