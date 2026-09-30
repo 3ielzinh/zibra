@@ -1,4 +1,5 @@
 import { fallbackProducts, normalizeWordPressProduct, type CatalogSource, type Product } from './catalog';
+import { defaultPackagingSlides, type PackagingSlide } from './packaging';
 
 export type CatalogResult = {
   products: Product[];
@@ -15,9 +16,38 @@ export type CatalogProductResult = {
 };
 
 const PAGE_SIZE = 100;
-const REVALIDATE_SECONDS = 300;
 const REQUEST_TIMEOUT_MS = 8000;
 let lastValidCatalog: Product[] | null = null;
+
+type WordPressSiteContent = {
+  packaging_images?: Array<{ url?: unknown; alt?: unknown }>;
+};
+
+export async function getPackagingSlides(): Promise<PackagingSlide[]> {
+  const apiUrl = (process.env.WP_API_URL || process.env.NEXT_PUBLIC_WP_API_URL || '').replace(/\/$/, '');
+  if (!apiUrl) return defaultPackagingSlides;
+
+  try {
+    const response = await fetch(`${apiUrl}/zibra/v1/site-content`, {
+      headers: { Accept: 'application/json' },
+      cache: 'no-store',
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+    if (!response.ok) return defaultPackagingSlides;
+    const data = await response.json() as WordPressSiteContent;
+    const slides = Array.isArray(data.packaging_images)
+      ? data.packaging_images.slice(0, 8).flatMap((image) => {
+          const src = typeof image.url === 'string' ? image.url.trim() : '';
+          if (!src) return [];
+          const alt = typeof image.alt === 'string' && image.alt.trim() ? image.alt.trim() : 'Embalagem Zibra';
+          return [{ src, alt }];
+        })
+      : [];
+    return slides.length ? slides : defaultPackagingSlides;
+  } catch {
+    return defaultPackagingSlides;
+  }
+}
 
 async function fetchCatalogPage(apiUrl: string, page: number) {
   const url = new URL(`${apiUrl}/wp/v2/produtos`);
@@ -29,7 +59,7 @@ async function fetchCatalogPage(apiUrl: string, page: number) {
 
   const response = await fetch(url, {
     headers: { Accept: 'application/json' },
-    next: { revalidate: REVALIDATE_SECONDS },
+    cache: 'no-store',
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
 

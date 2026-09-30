@@ -24,7 +24,6 @@ if (wordpressBaseUrl) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  agentRules: false,
   images: {
     formats: ['image/webp'],
     deviceSizes: [480, 640, 750, 828, 1080, 1440, 1920],

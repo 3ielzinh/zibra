@@ -1,29 +1,53 @@
 import Image from 'next/image';
 import CatalogClient from './CatalogClient';
-import HomeHeader from './HomeHeader';
-import HeroFilm from './HeroFilm';
+import HeroVideo from './HeroVideo';
 import ArrowIcon from './ArrowIcon';
+import HomeHeader from './HomeHeader';
+import PackagingCarousel from './PackagingCarousel';
 import { whatsappUrl } from '../lib/catalog';
-import { getCatalog } from '../lib/catalog-server';
+import { getCatalog, getPackagingSlides } from '../lib/catalog-server';
+import { serializeJsonLd, SITE_URL } from '../lib/seo';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'ZIBRA',
+      url: SITE_URL,
+      logo: `${SITE_URL}/zibra-logo-full-black.png`,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'ZIBRA',
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+  ],
+};
 
 export default async function Home() {
-  const catalog = await getCatalog();
+  const [catalog, packagingSlides] = await Promise.all([getCatalog(), getPackagingSlides()]);
   const contactUrl = whatsappUrl();
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }} />
       <HomeHeader />
       <section className="hero" id="inicio">
         <div className="hero-copy">
           <div className="hero-edition"><span>Maison Zibra</span><span>Brasil / 2026</span></div>
           <p className="eyebrow">Joias que guardam significado</p>
-          <h1>O brilho de ser <em>única.</em></h1>
+          <h1>O que importa <em>fica.</em></h1>
           <p className="hero-lead">Peças delicadas, acabamento impecável e uma experiência pensada para transformar cada escolha em memória.</p>
           <div className="hero-actions"><a className="button button-light" href="#colecao">Conhecer a coleção <span><ArrowIcon /></span></a><a className="text-link" href="#essencia">Descubra a Zibra <span><ArrowIcon direction="down" /></span></a></div>
           <div className="hero-note"><span>✦</span><p><strong>Feito para encantar</strong><br />Da joia à embalagem, cada detalhe importa.</p></div>
         </div>
         <div className="hero-visual">
-          <HeroFilm />
+          <HeroVideo />
           <div className="image-tag"><p>Filme de campanha<br />Maison Zibra</p></div>
         </div>
       </section>
@@ -34,6 +58,10 @@ export default async function Home() {
         </div>
       </div>
       <CatalogClient products={catalog.products} source={catalog.source} hasRemoteError={catalog.hasError} isStale={catalog.isStale} />
+      <section className="experience" id="experiencia">
+        <PackagingCarousel slides={packagingSlides} />
+        <div className="experience-copy"><p className="section-kicker">A EXPERIÊNCIA ZIBRA</p><h2>O presente começa<br /><em>antes de abrir.</em></h2><p>Cada joia é preparada com cuidado e entregue em uma embalagem elegante, pronta para tornar o momento inesquecível, tanto para alguém especial quanto para você.</p><ul><li><span>01</span> Embalagem exclusiva</li><li><span>02</span> Apresentação impecável</li><li><span>03</span> Cuidado em cada detalhe</li></ul></div>
+      </section>
       <section className="manifesto" id="essencia">
         <Image className="manifesto-sigil" src="/zibra-monogram-black.png" alt="" width={42} height={36} aria-hidden="true" />
         <p className="section-kicker">PRATA • DELICADEZA • SIGNIFICADO</p>
@@ -45,10 +73,6 @@ export default async function Home() {
         <p className="section-kicker">UMA ESCOLHA ÍNTIMA</p>
         <h2>Para lembrar. Para celebrar.<br /><em>Para ser sua.</em></h2>
         <span>O extraordinário mora nos detalhes.</span>
-      </section>
-      <section className="experience" id="experiencia">
-        <div className="experience-image"><Image src="/zibra-embalagem-studio-v2.png" alt="Sacola e caixas premium da Zibra em composição de estúdio" fill sizes="(max-width: 800px) 100vw, 55vw" quality={82} /></div>
-        <div className="experience-copy"><p className="section-kicker">A EXPERIÊNCIA ZIBRA</p><h2>O presente começa<br /><em>antes de abrir.</em></h2><p>Cada joia é preparada com cuidado e entregue em uma embalagem elegante, pronta para tornar o momento inesquecível, tanto para alguém especial quanto para você.</p><ul><li><span>01</span> Embalagem exclusiva</li><li><span>02</span> Apresentação impecável</li><li><span>03</span> Cuidado em cada detalhe</li></ul></div>
       </section>
       <section className="promise"><div><span>✦</span><p><strong>Curadoria especial</strong>Peças escolhidas para emocionar</p></div><div><span>◇</span><p><strong>Atendimento próximo</strong>Ajuda para encontrar a joia certa</p></div><div><span>∞</span><p><strong>Feita para durar</strong>Beleza que atravessa momentos</p></div></section>
       <section className="trust"><p>Garantia e cuidado</p><p>Embalagem pronta para presentear</p><p>Atendimento humano e próximo</p><p>Trocas com orientação</p></section>

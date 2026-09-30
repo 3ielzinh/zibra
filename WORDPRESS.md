@@ -18,29 +18,27 @@ As credenciais nunca passam pelo frontend da loja.
 
 1. Instale um WordPress limpo em um subdomínio, por exemplo \`catalogo.zibraoficial.com.br\`.
 2. No painel WordPress, acesse **Plugins > Adicionar plugin > Enviar plugin**.
-3. Envie e ative \`wordpress/zibra-catalog.zip\` (deste repositório). A ativação cria a função **Gerente do catálogo Zibra**, registra o tipo **Produtos** e semeia as categorias iniciais (Brincos, Colares, Correntes, Anéis, Pulseiras).
+3. Envie e ative \`wordpress/zibra-catalog.zip\`. A ativação cria a função **Gerente do catálogo Zibra**, registra o catálogo e prepara as categorias Brincos, Colares, Correntes, Anéis, Pulseiras e Pingentes sem apagar categorias existentes.
 4. Crie o usuário do cliente com a função **Gerente do catálogo Zibra**.
 5. Não conceda a função Administrador ao cliente.
 6. Confirme que \`https://SEU-WORDPRESS/wp-json/wp/v2/produtos\` responde publicamente.
 
-O fonte do plugin fica em \`wordpress/zibra-catalog.php\`; gere um novo \`wordpress/zibra-catalog.zip\` a partir dele sempre que editá-lo (a pasta interna do zip deve se chamar \`zibra-catalog/\`).
+O arquivo-fonte do plugin fica em \`wordpress/zibra-catalog.php\`. Sempre gere novamente o ZIP do plugin depois de alterá-lo, mantendo a pasta interna com o nome \`zibra-catalog/\`.
 
 ## O que o cliente pode gerenciar
 
 - produtos publicados e rascunhos;
-- categorias: as iniciais já vêm criadas e podem ser renomeadas, removidas ou ampliadas livremente;
-- nome (título) e descrição (editor principal);
-- resumo curto (campo Resumo);
-- imagem principal (imagem destacada) e galeria (seletor de mídia, na lateral);
-- preço em reais (campo numérico) com texto de preço opcional para sobrescrever a exibição;
-- material, medidas e código de referência;
-- disponibilidade em três estados: **Em estoque**, **Sob consulta** e **Esgotado**;
-- cuidados e destaque;
-- ordem de exibição (atributo de página `menu_order`).
+- categorias criadas livremente;
+- nome e descrição;
+- resumo curto;
+- imagem principal e galeria;
+- preço estruturado em reais, material, medidas, perfil (unissex, masculino ou feminino) e disponibilidade controlada;
+- cuidados, referência e destaque;
+- ordem de exibição.
 
 Para retirar uma peça da vitrine sem apagá-la, altere o status para **Rascunho**.
 
-Antes de publicar, o painel exige nome, resumo, descrição, categoria, imagem destacada, preço, material, medidas e código de referência. Se algo faltar, a joia volta automaticamente para **Rascunho** e um aviso indica o que preencher. A disponibilidade é sempre um dos três estados acima; peças esgotadas continuam visíveis, mas sem ação de compra.
+Antes de publicar, o painel exige nome, resumo, descrição, categoria, imagem destacada, preço, material, medidas e código de referência. A disponibilidade deve ser escolhida entre **Em estoque**, **Sob consulta** e **Esgotado**. Peças esgotadas continuam visíveis, mas não exibem ação de compra.
 
 ## Conexão com a loja
 

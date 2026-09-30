@@ -7,11 +7,14 @@ import ArrowIcon from '../ArrowIcon';
 const wpUrl = process.env.NEXT_PUBLIC_WP_URL?.replace(/\/$/, '') || '';
 
 export const metadata: Metadata = {
-  title: 'Gestão do catálogo | ZIBRA',
+  title: 'Gestão do catálogo',
   description: 'Acesso administrativo ao catálogo da ZIBRA.',
   robots: {
     index: false,
     follow: false,
+  },
+  alternates: {
+    canonical: '/acesso',
   },
 };
 

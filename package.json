@@ -9,12 +9,12 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern outputs"
   },
   "dependencies": {
-    "next": "16.3.4",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "next": "16.3.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.2.1",
@@ -22,7 +22,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.3.4",
+    "eslint-config-next": "16.3.7",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3"
   },

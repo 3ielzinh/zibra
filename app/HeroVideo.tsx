@@ -9,7 +9,7 @@ const gestureEvents = ['touchstart', 'pointerdown', 'keydown'] as const;
  * restrições, aba em segundo plano). Aqui garantimos o estado mudo, tentamos tocar assim que o
  * vídeo estiver pronto e voltamos a tentar no primeiro toque do usuário e ao retornar à aba.
  */
-export default function HeroFilm() {
+export default function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
